@@ -6,7 +6,10 @@
 1. slurm + miniconda + jupyter
 2. 登入ThinLinc 互動式繪圖節點和操作範例說明
  - 安裝 ThinLinc
- - 使用ThinLinc 登入 n5 
+ - 使用ThinLinc 登入 n5
+  - 注意！Password: 3 (輸入1~3。選擇2FA的其中一種方式登入) 用選擇 3. Email OTP
+  - 另外跳出一個password視窗，輸入主機密碼
+  - 等待Email發送OTP密碼
 
 ---
 ---
