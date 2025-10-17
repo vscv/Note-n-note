@@ -27,6 +27,15 @@
 
 
 ---
+# ssh timeout 時間
+
+如果是因為 shell 自動登出（非 SSH），可以在使用者的 shell 設定檔中調整 TMOUT：
+編輯 ~/.bashrc 或 ~/.bash_profile：
+
+export TMOUT=1800  # 單位是秒，這裡是 30 分鐘
+
+
+
 ---
 ## install_env.sh
 * 2021
