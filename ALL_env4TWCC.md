@@ -8,7 +8,7 @@
 <img width="400" height="346" alt="image" src="https://github.com/user-attachments/assets/95ad45e3-1506-482e-a85f-3d9ca01e2738" />
 
 
-2. 登入ThinLinc 互動式繪圖節點和操作範例說明
+2. 登入ThinLinc 互動式繪圖節點和操作範例說明 (⚠️⚠️ 這是登入節點，雖然配了兩卡但不是用做長計算！且卡不是獨佔使用！同時可能有其他使用者佔用！！⚠️⚠️)
 
 <img width="400" height="404" alt="image" src="https://github.com/user-attachments/assets/3a82749a-22b3-44fd-8305-8d07c14dfaf5" />
 
@@ -18,7 +18,7 @@
   - 另外跳出一個password視窗，輸入主機密碼
   - 等待Email發送OTP密碼後填入
     - 進入互動式節點桌面
-    - 2 * NVIDIA H100 PCIe, 80GB 🔋 ⚠️⚠️不是獨佔使用！同時可能有其他使用者佔用！！⚠️⚠️
+    - 2 * NVIDIA H100 PCIe, 80GB 🔋 
     - `只能固定使用兩張H100`，不能選H200或更多張卡
 - 檔案傳輸
   1. 傳輸節點FileZila可以，選交談式登入，一樣選3 mail OTP。`賽博鴨不行會鬼打牆`
