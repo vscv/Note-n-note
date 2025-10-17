@@ -5,6 +5,8 @@
 嘗試兩個方法
 1. slurm + miniconda + jupyter
 2. 登入ThinLinc 互動式繪圖節點和操作範例說明
+ - 安裝 ThinLinc
+ - 使用ThinLinc 登入 n5 
 
 ---
 ---
