@@ -1,12 +1,15 @@
 ---
 
 # Slurm 排程主機 🛫🛫🛫
-這個新主機只能用排程跑，對非HPC科學計算的開發不方便。
+
+這個新主機只能用排程跑GPU
+
+<img width="400" height="346" alt="image" src="https://github.com/user-attachments/assets/95ad45e3-1506-482e-a85f-3d9ca01e2738" />
+<img width="400" height="404" alt="image" src="https://github.com/user-attachments/assets/3a82749a-22b3-44fd-8305-8d07c14dfaf5" />
 
 ## 排程
 slurm + miniconda + jupyter
 
-<img width="400" height="346" alt="image" src="https://github.com/user-attachments/assets/95ad45e3-1506-482e-a85f-3d9ca01e2738" />
 
 
 ## 登入方式 (⚠️⚠️ 這是登入節點，雖然配了兩卡但不是用做長計算！且卡不是獨佔使用！同時可能有其他使用者佔用！！⚠️⚠️)
@@ -18,7 +21,7 @@ slurm + miniconda + jupyter
 
 2. 登入ThinLinc 互動式繪圖節點和操作範例說明 
 
-<img width="400" height="404" alt="image" src="https://github.com/user-attachments/assets/3a82749a-22b3-44fd-8305-8d07c14dfaf5" />
+
 
 - 安裝 [ThinLinc](https://www.cendio.com/thinlinc/download/)
 - 使用ThinLinc 登入 n5
