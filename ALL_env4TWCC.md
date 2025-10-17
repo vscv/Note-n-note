@@ -34,7 +34,7 @@
 
 export TMOUT=1800  # 單位是秒，這裡是 30 分鐘
 
-
+`某些系統可能在/etc/profile檔案中設定了readonly TMOUT，這會阻止使用者修改TMOUT的值。如果遇到-bash: TMOUT: readonly variable的錯誤，您需要將readonly TMOUT這一行註解掉。`
 
 ---
 ## install_env.sh
