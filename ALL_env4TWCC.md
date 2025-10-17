@@ -1,3 +1,12 @@
+---
+# Slurm with Jupyter notebook
+- 這個主機只能用排程跑，對非HPC科學計算的應用不方便。用慣了容器環境，但來試試看吧？跑起來！🛫🛫🛫
+
+- 
+
+
+---
+---
 ## install_env.sh
 * 2021
 
