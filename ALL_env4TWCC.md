@@ -22,7 +22,7 @@
     - `只能固定使用兩張H100`，不能選H200或更多張卡
 - 檔案傳輸
   1. 傳輸節點FileZila可以，選交談式登入，一樣選3 mail OTP。`賽博鴨不行會鬼打牆`
-  2. sftp [範本](https://man.twcc.ai/@AI-Pilot/SkDyJN4Gkl) 比較方便直接從另一台主機傳到新主機上，且主機間是內網比中轉快非常多。
+  2. sftp [指令範本](https://man.twcc.ai/@AI-Pilot/SkDyJN4Gkl) 比較方便直接從另一台主機傳到新主機上，且主機間是內網比中轉快非常多。
 
 
 
