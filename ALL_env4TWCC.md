@@ -14,7 +14,7 @@
   - 另外跳出一個password視窗，輸入主機密碼
   - 等待Email發送OTP密碼後填入
     - 進入互動式節點桌面
-    - 2 * NVIDIA H100 PCIe, 80GB
+    - 2 * NVIDIA H100 PCIe, 80GB 🔋
     - 傳輸節點FileZila可以，選交談式登入，一樣選3 mail OTP。`賽博鴨不行會鬼打牆`
 
 ---
