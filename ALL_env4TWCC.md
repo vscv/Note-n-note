@@ -1,8 +1,11 @@
 ---
-# Slurm with Jupyter notebook 🛫🛫🛫
+# Slurm 排程主機 🛫🛫🛫
 - 這個新主機只能用排程跑，對非HPC科學計算的開發不方便。
 
-- 
+1. slurm + miniconda + jupyter
+a. a
+b. b
+2. 互動式節點：https://man.twcc.ai/B5MmH5TiS6qwCKYZnP7HBw
 
 
 ---
