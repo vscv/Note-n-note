@@ -4,12 +4,16 @@
 這個新主機只能用排程跑，對非HPC科學計算的開發不方便。
 嘗試兩個方法
 1. slurm + miniconda + jupyter
+
+
+
 2. 登入ThinLinc 互動式繪圖節點和操作範例說明
-- 安裝 ThinLinc
+- 安裝 [ThinLinc](https://www.cendio.com/thinlinc/download/)
 - 使用ThinLinc 登入 n5
   - 注意！Password： 3 (輸入1~3。選擇2FA的其中一種方式登入) 用選擇 3. Email OTP
   - 另外跳出一個password視窗，輸入主機密碼
   - 等待Email發送OTP密碼後填入
+    - 進入互動式節點桌面
     - 一個虛擬機關閉資料都會消失喔
     - 2 * NVIDIA H100 PCIe, 80GB
 
