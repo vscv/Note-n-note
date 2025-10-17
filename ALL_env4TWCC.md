@@ -5,9 +5,13 @@
 嘗試兩個方法
 1. slurm + miniconda + jupyter
 
+<img width="400" height="346" alt="image" src="https://github.com/user-attachments/assets/95ad45e3-1506-482e-a85f-3d9ca01e2738" />
 
 
 2. 登入ThinLinc 互動式繪圖節點和操作範例說明
+
+<img width="400" height="404" alt="image" src="https://github.com/user-attachments/assets/3a82749a-22b3-44fd-8305-8d07c14dfaf5" />
+
 - 安裝 [ThinLinc](https://www.cendio.com/thinlinc/download/)
 - 使用ThinLinc 登入 n5
   - 注意！Password： 3 (輸入1~3。選擇2FA的其中一種方式登入) 用選擇 3. Email OTP
@@ -18,9 +22,9 @@
     - 傳輸節點FileZila可以，選交談式登入，一樣選3 mail OTP。`賽博鴨不行會鬼打牆`
     - `只能固定使用兩張H100`，不能選H200或更多張卡
 
-<img width="400" height="346" alt="image" src="https://github.com/user-attachments/assets/95ad45e3-1506-482e-a85f-3d9ca01e2738" />
 
-<img width="400" height="404" alt="image" src="https://github.com/user-attachments/assets/3a82749a-22b3-44fd-8305-8d07c14dfaf5" />
+
+
 
 ---
 ---
