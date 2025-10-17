@@ -18,6 +18,8 @@
     - 傳輸節點FileZila可以，選交談式登入，一樣選3 mail OTP。`賽博鴨不行會鬼打牆`
     - `只能固定使用兩張H100`，不能選H200或更多張卡
 
+<img width="908" height="404" alt="image" src="https://github.com/user-attachments/assets/3a82749a-22b3-44fd-8305-8d07c14dfaf5" />
+
 ---
 ---
 ## install_env.sh
