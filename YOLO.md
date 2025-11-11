@@ -4,6 +4,18 @@
 
 ## YOLO-segmentation performance
 
+YOLO26-性能表
+`Coming soon`
+
+YOLO12-性能表
+
+<p align="center">
+  <img width=70% height=40% src="/temp_imgs/YOLO12-mAP.jpg">
+</p>
+
+
+
+
 YOLO11-性能表
 
 <p align="center">
@@ -11,11 +23,6 @@ YOLO11-性能表
 </p>
 
 
-YOLO12-性能表
-
-<p align="center">
-  <img width=70% height=40% src="/temp_imgs/YOLO12-mAP.jpg">
-</p>
 
 
 ---
