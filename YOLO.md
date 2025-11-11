@@ -16,17 +16,26 @@ YOLO12-性能表
 
 
 
-YOLO11-性能表-seg
+YOLO11-性能表
+- det
+<p align="center">
+  <img width=70% height=40% src="/temp_imgs/yolo11_mAPjpg.jpg">
+</p>
 
+
+- seg
 <p align="center">
   <img width=70% height=40% src="/temp_imgs/YOLO11-mAP.jpg">
 </p>
 
 
+
 YOLOv9-性能表
 
 
-
+<p align="center">
+  <img width=70% height=40% src="/temp_imgs/yolov9_det性能表.jpg">
+</p>
 
 
 ---
