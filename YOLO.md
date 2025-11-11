@@ -35,7 +35,7 @@ from multiprocessing import Pool
 from tqdm import tqdm
 
 # --- 1. 配置參數 (保持不變) ---
-Fold = "V9e-K3-512-V2"
+Fold = "model-##"
 imgsz = 512
 PT = 'epoch38.pt'
 run_ta = False
