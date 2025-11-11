@@ -24,7 +24,20 @@ YOLO12-性能表
 # YOLO prediction with Multi-GPUs
 - 由於 ultralytics/YOLO 模型的 model.predict() 本身不直接支援多 GPU 分佈式推論 (Distributed Inference)，我們需要使用 Python 的多進程 (Multiprocessing) 或 多線程 (Threading) 搭配 GPU 索引 來模擬並行化。 在這裡，使用 多進程 (multiprocessing) 是最安全和推薦的做法，因為它可以避免 Python 的 GIL（全局解釋器鎖）問題，並且能讓每個進程獨立運行在指定的 GPU 上。
 
-由於檔案列表太大的話會造成GPU OOM（一次讀取所有照片檔造成）。我們在 single_gpu_predict 函式內部新增一個分批器 (Batcher) 邏輯，將分配給該 GPU 的大檔案列表 (file_list)，進一步切割成每次只包含 10 個檔案的小批次 (Sub-batches)。在16000張512x512影像，單卡6分鐘，8卡45秒完成推論。
+由於檔案列表太大的話會造成GPU OOM（一次讀取所有照片檔造成）。我們在 single_gpu_predict 函式內部新增一個分批器 (Batcher) 邏輯，將分配給該 GPU 的大檔案列表 (file_list)，進一步切割成每次只包含 10 個檔案的小批次 (Sub-batches)。在16000張512x512影像，單卡6分鐘，8卡41秒完成推論。
+
+```Bash
+Active GPUs: [0, 1, 2, 3, 4, 5, 6, 7], N_GPUS: 8, Sub-Batch Size: 10
+總檔案數: 16000, 分割成 8 份。
+多 GPU 進程完成數: 100%|██████████| 8/8 [00:41<00:00,  5.14s/進程]                 
+
+開始合併 8 個臨時結果檔案...
+已收集並排序 43185 條檢測結果。
+✅ 最終結果已儲存到 ./yolo-predict/epoch38.pt_final.txt (並已排序)
+總計有 box 的影像張數: 12917, 總計 box 數量: 43185
+所有臨時檔案已清除。
+```
+
 
 ```Python
 
