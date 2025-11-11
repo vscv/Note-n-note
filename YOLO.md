@@ -34,7 +34,7 @@ from ultralytics import YOLO
 from multiprocessing import Pool
 from tqdm import tqdm
 
-# --- 1. 配置參數 (保持不變) ---
+# --- 1. 配置參數 ---
 Fold = "model-##"
 imgsz = 512
 PT = 'epoch38.pt'
@@ -50,16 +50,15 @@ ACTIVE_DEVICES = AVAILABLE_DEVICES[:N_GPUS]
 OUTPUT_DIR = f'./predict_txt/{Fold}{TTA}_{PT}_{imgsz}_parallel/'
 FINAL_OUTPUT_FILE = f'./predict_txt/{Fold}{TTA}_{PT}_{imgsz}_final.txt'
 
-# --- 新增配置：內部批次大小 ---
+# --- 內部批次大小 ---
 SUB_BATCH_SIZE = 10
 print(f'Active GPUs: {ACTIVE_DEVICES}, N_GPUS: {N_GPUS}, Sub-Batch Size: {SUB_BATCH_SIZE}')
-# ... (其他 print 保持不變)
 
 # 確保輸出目錄存在
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 
-# --- 輔助函式 (保持不變) ---
+# --- 切分檔案列表 ---
 def split_data(source_dir, n_splits):
     # ... (split_data 函式內容保持不變)
     all_files = glob.glob(os.path.join(source_dir, '*.png'))
@@ -83,7 +82,7 @@ def split_data(source_dir, n_splits):
     return splits
 
 
-# --- 4. 單一 GPU 推論函式 (內部批次處理修正) ---
+# --- 4. 單一 GPU 推論函式 (+內部批次處理) ---
 def single_gpu_predict(args):
     """
     在單個進程中，使用指定的 GPU 對一組檔案進行推論，並進行內部批次切割。
@@ -150,7 +149,7 @@ def single_gpu_predict(args):
     
     return temp_output_path, box_count_1, box_count_2, gpu_id
 
-# --- 5. 合併結果函式 (新增排序功能) ---
+# --- 5. 合併結果函式 (+排序) ---
 def combine_results(temp_files):
     """將所有臨時檔案合併成一個最終輸出檔案，並依檔名排序。"""
     combined_box_count_1 = 0
@@ -191,7 +190,7 @@ def combine_results(temp_files):
     print(f'所有臨時檔案已清除。')
 
 
-# --- 6. 執行主程序 (保持不變) ---
+# --- 6. 執行主程序 ---
 if __name__ == '__main__':
     
     # 1. 數據分割
@@ -217,4 +216,5 @@ if __name__ == '__main__':
                                       unit="進程"))
 
     # 4. 合併結果
+    combine_results(results_from_pool)
 ```
