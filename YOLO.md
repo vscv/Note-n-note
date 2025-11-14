@@ -93,7 +93,7 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # --- 切分檔案列表 ---
 def split_data(source_dir, n_splits):
-    # ... (split_data 函式內容保持不變)
+    # split_data 函式
     all_files = glob.glob(os.path.join(source_dir, '*.png'))
     
     if not all_files:
@@ -128,7 +128,7 @@ def single_gpu_predict(args):
     box_count_1 = 0
     box_count_2 = 0
     
-    # --- 【關鍵修正：內部批次切割與循環】 ---
+    # --- 【關鍵：內部批次切割與循環】 ---
     
     # 設置 tqdm 追蹤該進程的工作進度
     total_files_in_split = len(total_file_list)
