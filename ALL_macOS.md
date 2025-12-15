@@ -125,7 +125,37 @@ iconutil -c icns icons.iconset -o icon.icns
 #!/bin/sh
 cd 2023_11_13_Segment_kidney_blood_vessel/notebooks/;
 ```
+
+
 * * *
+# Jupyter Notebook 註冊\更換新的kernal核心
+注意！這個範例改成jupyter notebook版本了，用於用matplotlib繪圖。
+
+步驟三：在 Jupyter 中註冊虛擬環境 Kernel (核心)
+
+```
+▶ pip install ipykernel  (補裝)
+python -m ipykernel install --user --name=my_project_venv --display-name="My Project Venv (Python 3.x)"
+•  --user: 將 Kernel 安裝到當前用戶的配置中。
+•  --name: 這是給 Kernel 檔案取的名稱（例如：my_project_venv）。
+•  --display-name: 這是您在 Jupyter Notebook 介面中看到的名稱（例如：My Project Venv (Python 3.x)）。
+
+▶ python -m ipykernel install --user --name=vQuantum312 --display-name="vQuantum312-venv (Python 3.12)"
+Installed kernelspec vQuantum312 in /Users/PATH/Library/Jupyter/kernels/vquantum312  
+💡 快速檢查
+您可以使用這個指令來查看您的電腦上目前註冊了哪些 Jupyter Kernels：
+▶ jupyter kernelspec list
+Available kernels:
+  python3        /usr/local/lib/python3.9/site-packages/ipykernel/resources
+  vquantum312    /Users/PATH/Library/Jupyter/kernels/vquantum312
+  vtf25          /Users/PATH/Library/Jupyter/kernels/vtf25
+  vvino          /Users/PATH/Library/Jupyter/kernels/vvino
+  vtf220         /usr/local/share/jupyter/kernels/vtf220
+  vtf230         /usr/local/share/jupyter/kernels/vtf230      
+vquantum312    使用環境ＯＫ！
+```
+
+
 
 * * *
 
