@@ -159,6 +159,127 @@ vquantum312    使用環境ＯＫ！
 
 * * *
 
+## 從PDF複製文字貼上word後的字型不一致，且無法修改的問題
+
+<img width="3790" height="1132" alt="image" src="https://github.com/user-attachments/assets/84c69f55-3bef-4c91-8ba8-97e135d61ae8" />
+
+`這也是vibe coding的好例子，經歷多次回饋，探索不同方向，引導LLM趨向你認知的解決方案，而不是讓他無限制發散，導致落入大量廢碼的黑洞。`
+
+
+#### 「重新打字」式 PDF 文字清理器（macOS）
+目標：輸出「100% 標準 Unicode 中文」文字，確保貼到 Word 可正常套用標楷體（DFKai-SB）
+
+
+方法：
+1. 僅保留「安全字元」：標準中文字 (U+4E00–U+9FFF) + 常用標點/數字/英文字母
+2. 移除所有相容漢字（U+FAxx）、私用區（U+E000+）、控制字元
+3. 重建純文字，效果等同「人工重新輸入」
+
+
+使用流程：`直接在剪貼簿中處理`
+1. 從 PDF 複製有問題的文字（⌘+C）
+2. 執行： py retype_pdf_text.py
+3. 腳本會：
+  顯示原始文字片段（用 repr 可見隱藏字元）
+  顯示重建後文字
+  自動複製乾淨文字到剪貼簿
+4. 到 Word 貼上（⌘+V）
+
+🔍 為什麼這個方法有效？
+完全避開相容漢字（U+FAxx）：因它們不在 0x4E00–0x9FFF 範圍內
+移除私用區（PUA）字元：常見於掃描 PDF 的 OCR 錯誤
+只保留「系統一定能用標楷體顯示」的字元
+效果 ≈ 你手動重新打字，但 100% 自動化
+
+```
+import sys
+import subprocess
+import re
+
+def is_safe_char(c: str) -> bool:
+    """判斷字元是否屬於「安全可保留」範圍"""
+    code = ord(c)
+    # 標準中文字區
+    if 0x4E00 <= code <= 0x9FFF:
+        return True
+    # 擴展 A 區（部分罕用字）
+    if 0x3400 <= code <= 0x4DBF:
+        return True
+    # 常用 ASCII（含數字、英文字母、基本標點）
+    if 0x20 <= code <= 0x7E:
+        return True
+    # 中文標點（全形）
+    if code in {
+        0x3000, 0x3001, 0x3002, 0xFF0C, 0xFF1B, 0xFF1A,
+        0xFF1F, 0xFF01, 0xFF02, 0xFF08, 0xFF09, 0x300C,
+        0x300D, 0x300E, 0x300F, 0x3010, 0x3011, 0x300A,
+        0x300B, 0x3008, 0x3009, 0xFF0E, 0x2014, 0x2013,
+        0x2018, 0x2019, 0x201C, 0x201D, 0x3001, 0x3002
+    }:
+        return True
+    # 換行、段落保留
+    if c in '\n\r':
+        return True
+    return False
+
+def retype_text(text: str) -> str:
+    """只保留安全字元，等同「重新打字」"""
+    cleaned = ''.join(c for c in text if is_safe_char(c))
+    
+    # 清理多餘空白與換行
+    lines = [line.strip() for line in cleaned.splitlines()]
+    filtered_lines = []
+    prev_empty = False
+    for line in lines:
+        if line == '':
+            if not prev_empty:
+                filtered_lines.append('')
+            prev_empty = True
+        else:
+            # 移除行內多餘空格（可選）
+            line = re.sub(r' +', ' ', line)
+            filtered_lines.append(line)
+            prev_empty = False
+    return '\n'.join(filtered_lines)
+
+def get_clipboard() -> str:
+    result = subprocess.run(['pbpaste'], capture_output=True, text=True, encoding='utf-8')
+    if result.returncode != 0:
+        raise RuntimeError("無法讀取剪貼簿")
+    return result.stdout
+
+def set_clipboard(text: str):
+    proc = subprocess.Popen(['pbcopy'], stdin=subprocess.PIPE, text=True, encoding='utf-8')
+    proc.communicate(input=text)
+    if proc.returncode != 0:
+        raise RuntimeError("無法寫入剪貼簿")
+
+def main():
+    try:
+        raw = get_clipboard()
+        print("📋 原始文字（前100字）：")
+        print(repr(raw[:100]) + "...")
+        print()
+
+        cleaned = retype_text(raw)
+        print("✅ 已重建為標準文字（前100字）：")
+        print(repr(cleaned[:100]) + "...")
+        print()
+
+        set_clipboard(cleaned)
+        print("✨ 已將「重新打字」後的文字複製到剪貼簿！")
+        print("→ 請直接貼到 Word 並設定字型為「DFKai-SB」")
+
+    except Exception as e:
+        print(f"❌ 錯誤：{e}", file=sys.stderr)
+        sys.exit(1)
+
+if __name__ == '__main__':
+    main()
+
+```
+
+
 * * *
 
 * * *
