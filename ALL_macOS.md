@@ -191,7 +191,7 @@ vquantum312    使用環境ＯＫ！
 只保留「系統一定能用標楷體顯示」的字元
 效果 ≈ 你手動重新打字，但 100% 自動化
 
-```
+```python
 import sys
 import subprocess
 import re
