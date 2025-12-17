@@ -163,7 +163,7 @@ vquantum312    使用環境ＯＫ！
 
 <img width="3790" height="1132" alt="image" src="https://github.com/user-attachments/assets/84c69f55-3bef-4c91-8ba8-97e135d61ae8" />
 
-`這也是vibe coding的好例子，經歷多次回饋，探索不同方向，引導LLM趨向你認知的解決方案，而不是讓他無限制發散，導致落入大量廢碼的黑洞。`
+`這也是vibe coding的好例子，經歷多次回饋，探索不同方向，引導LLM趨向你認知的解決方案，落入大量廢碼的黑洞。`
 
 
 #### 「重新打字」式 PDF 文字清理器（macOS）
@@ -192,90 +192,89 @@ vquantum312    使用環境ＯＫ！
 效果 ≈ 你手動重新打字，但 100% 自動化
 
 ```python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+終極 PDF 文字清理器（macOS）— 繁體中文優化版
+1. 使用 NFKC 將相容漢字轉為標準字
+2. 保留/還原全形中文標點（，。；：「」等）
+3. 移除有害控制字元
+"""
+
 import sys
 import subprocess
+import unicodedata
 import re
 
-def is_safe_char(c: str) -> bool:
-    """判斷字元是否屬於「安全可保留」範圍"""
-    code = ord(c)
-    # 標準中文字區
-    if 0x4E00 <= code <= 0x9FFF:
-        return True
-    # 擴展 A 區（部分罕用字）
-    if 0x3400 <= code <= 0x4DBF:
-        return True
-    # 常用 ASCII（含數字、英文字母、基本標點）
-    if 0x20 <= code <= 0x7E:
-        return True
-    # 中文標點（全形）
-    if code in {
-        0x3000, 0x3001, 0x3002, 0xFF0C, 0xFF1B, 0xFF1A,
-        0xFF1F, 0xFF01, 0xFF02, 0xFF08, 0xFF09, 0x300C,
-        0x300D, 0x300E, 0x300F, 0x3010, 0x3011, 0x300A,
-        0x300B, 0x3008, 0x3009, 0xFF0E, 0x2014, 0x2013,
-        0x2018, 0x2019, 0x201C, 0x201D, 0x3001, 0x3002
-    }:
-        return True
-    # 換行、段落保留
-    if c in '\n\r':
-        return True
-    return False
+# 半形 → 全形 標點映射（常見於繁體中文）
+HALFWIDTH_TO_FULLWIDTH_PUNCT = {
+    ',': '，',   # U+002C → U+FF0C
+    '.': '。',   # U+002E → U+3002
+    ';': '；',   # U+003B → U+FF1B
+    ':': '：',   # U+003A → U+FF1A
+    '?': '？',   # U+003F → U+FF1F
+    '!': '！',   # U+0021 → U+FF01
+#    '"': '「',   # 可選：但需注意開閉引號
+#    "'": '’',    # 或保留原樣（引號較複雜）
+#    '(': '（',   # U+0028 → U+FF08
+#    ')': '）',   # U+0029 → U+FF09
+}
 
-def retype_text(text: str) -> str:
-    """只保留安全字元，等同「重新打字」"""
-    cleaned = ''.join(c for c in text if is_safe_char(c))
+def clean_text(text: str) -> str:
+    # 1. NFKC 正規化（解決相容漢字問題）
+    text = unicodedata.normalize('NFKC', text)
     
-    # 清理多餘空白與換行
-    lines = [line.strip() for line in cleaned.splitlines()]
-    filtered_lines = []
+    # 2. 還原全形標點（僅在「中文語境」下安全替換）
+    # 注意：只替換「前後是中文字或空白」的標點，避免誤改英文句子
+    # 對每個標點分別處理
+    for half, full in HALFWIDTH_TO_FULLWIDTH_PUNCT.items():
+        # 使用 lookahead/lookbehind 保留上下文
+        pattern = f'(?<!\\w){re.escape(half)}(?!\\w)'
+        text = re.sub(pattern, full, text)
+
+    # 3. 移除有害控制字元
+    hidden_chars = [
+        '\u200B', '\u200C', '\u200D', '\u200E', '\u200F',
+        '\uFEFF', '\uFFFD', '\u2028', '\u2029', '\u00AD',
+        '\u0000', '\u0001', '\u0002', '\u0003', '\u0004'
+    ]
+    pattern = '[' + re.escape(''.join(hidden_chars)) + ']'
+    text = re.sub(pattern, '', text)
+    
+    # 4. 清理多餘空白（但保留段落）
+    lines = [line.strip() for line in text.splitlines()]
+    result = []
     prev_empty = False
     for line in lines:
-        if line == '':
-            if not prev_empty:
-                filtered_lines.append('')
-            prev_empty = True
-        else:
-            # 移除行內多餘空格（可選）
+        if line:
+            # 壓縮行內多個空格為單一空格
             line = re.sub(r' +', ' ', line)
-            filtered_lines.append(line)
+            result.append(line)
             prev_empty = False
-    return '\n'.join(filtered_lines)
-
-def get_clipboard() -> str:
-    result = subprocess.run(['pbpaste'], capture_output=True, text=True, encoding='utf-8')
-    if result.returncode != 0:
-        raise RuntimeError("無法讀取剪貼簿")
-    return result.stdout
-
-def set_clipboard(text: str):
-    proc = subprocess.Popen(['pbcopy'], stdin=subprocess.PIPE, text=True, encoding='utf-8')
-    proc.communicate(input=text)
-    if proc.returncode != 0:
-        raise RuntimeError("無法寫入剪貼簿")
+        else:
+            if not prev_empty:
+                result.append('')
+                prev_empty = True
+    return '\n'.join(result)
 
 def main():
     try:
-        raw = get_clipboard()
-        print("📋 原始文字（前100字）：")
-        print(repr(raw[:100]) + "...")
-        print()
-
-        cleaned = retype_text(raw)
-        print("✅ 已重建為標準文字（前100字）：")
-        print(repr(cleaned[:100]) + "...")
-        print()
-
-        set_clipboard(cleaned)
-        print("✨ 已將「重新打字」後的文字複製到剪貼簿！")
-        print("→ 請直接貼到 Word 並設定字型為「DFKai-SB」")
-
+        # 讀取剪貼簿
+        raw = subprocess.run(['pbpaste'], capture_output=True, text=True, encoding='utf-8').stdout
+        cleaned = clean_text(raw)
+        # 寫回剪貼簿
+        proc = subprocess.Popen(['pbcopy'], stdin=subprocess.PIPE, text=True, encoding='utf-8')
+        proc.communicate(input=cleaned)
+        print("✅ 已清理文字並保留全形中文標點！")
+        print("→ 請貼到 Word 並使用「DFKai-SB」字型")
+        print(repr(cleaned))
     except Exception as e:
         print(f"❌ 錯誤：{e}", file=sys.stderr)
         sys.exit(1)
 
 if __name__ == '__main__':
     main()
+
 
 ```
 
