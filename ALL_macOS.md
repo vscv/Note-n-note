@@ -280,6 +280,170 @@ if __name__ == '__main__':
 
 
 * * *
+# MacOS掃描報告 (使用 ClamAV 開源掃毒工具)
+
+
+
+```bash
+#安裝
+brew install clamav
+
+📌 安裝後會得到什麼
+
+主要工具：
+
+clamscan → 用來掃描檔案/目錄（就是你要的掃毒功能）。
+
+clamd / clamdscan → 常駐掃描服務（需要另外設定）。
+
+freshclam → 更新病毒碼（signature database）。
+
+
+安裝完成後，可以確認版本：
+
+clamscan --version
+```
+
+
+```
+ 👍
+Homebrew 安裝的 ClamAV 在 macOS 上，預設並不會自動生成設定檔，所以你第一次執行 freshclam 會遇到：
+
+ERROR: Can't open/parse the config file /usr/local/etc/clamav/freshclam.conf
+
+🔧 解決方式
+Step 1. 建立設定檔
+
+Homebrew 安裝完 ClamAV 之後，通常會提供範例設定檔在：
+
+/usr/local/etc/clamav/freshclam.conf.sample
+/usr/local/etc/clamav/clamd.conf.sample
+
+
+你需要把它複製成正式設定檔：
+
+sudo cp /usr/local/etc/clamav/freshclam.conf.sample /usr/local/etc/clamav/freshclam.conf
+sudo cp /usr/local/etc/clamav/clamd.conf.sample /usr/local/etc/clamav/clamd.conf
+
+
+Step 2. 編輯 freshclam.conf
+
+用編輯器打開：
+
+sudo nano /usr/local/etc/clamav/freshclam.conf
+
+
+找到這一行：
+
+Example
+
+
+👉 刪掉或註解掉（在前面加 #），否則 freshclam 會拒絕執行。
+
+可選修改（推薦）：
+
+設定更新伺服器（通常預設就夠）：
+
+DatabaseMirror database.clamav.net
+
+
+設定日誌檔位置：
+
+UpdateLogFile /usr/local/var/log/clamav/freshclam.log
+
+Step 3. 建立日誌目錄（如果需要）
+sudo mkdir -p /usr/local/var/log/clamav
+sudo touch /usr/local/var/log/clamav/freshclam.log
+sudo chmod 644 /usr/local/var/log/clamav/freshclam.log
+
+🔧 解法
+方法 1. 把 log 檔權限調整給 clamav
+
+先確認有沒有 clamav 使用者：
+
+id clamav
+
+
+如果有的話，直接把 log 檔給它用：
+
+sudo chown clamav:clamav /usr/local/var/log/clamav/freshclam.log
+sudo chmod 644 /usr/local/var/log/clamav/freshclam.log
+
+
+目錄的權限也是給clamav使用者可以用
+sudo chown -R clamav:clamav /usr/local/var/lib/clamav
+
+
+
+
+📌 第一次使用注意事項
+
+🥈 Step 2. 更新病毒碼資料庫
+
+ClamAV 必須更新病毒特徵庫才有意義。第一次更新可能會花幾分鐘。
+
+方法 A（推薦）
+sudo freshclam
+
+
+
+執行測試掃描（先不要全機，測試一下）：
+先在一個小範圍（例如下載資料夾）測試：
+clamscan /Users/$(whoami)/Downloads
+
+```
+
+
+```
+sh run_cav.sh
+```
+
+#### run_cav.sh
+```bash
+#!/bin/bash
+
+# ================================
+# macOS ClamAV Full System Scanner
+# ================================
+
+# 取得目前使用者名稱
+USER_NAME=$(whoami)
+
+# 建立桌面報告檔案名稱（含日期時間）
+TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+REPORT_FILE="/Users/$USER_NAME/Desktop/clamav_scan_report_$TIMESTAMP.log"
+
+echo "======================================="
+echo "   🚀 ClamAV Full System Scan Started   "
+echo "======================================="
+echo "Report will be saved to: $REPORT_FILE"
+echo ""
+
+# 執行 ClamAV 掃描
+sudo clamscan -r / \
+  --exclude-dir="^/Volumes" \
+  --exclude-dir="^/System" \
+  --exclude-dir="^/dev" \
+  --exclude-dir="^/private/tmp" \
+  --exclude-dir="^/private/var/folders" \
+  --exclude-dir="^/cores" \
+  --exclude-dir="/Users/lsw/Library/CloudStorage/" \
+  --bell \
+  -v \
+  --log="$REPORT_FILE" \
+  --infected \
+  --recursive
+  
+
+echo ""
+echo "======================================="
+echo "   ✅ Scan Completed!"
+echo "   📄 Report saved at: $REPORT_FILE"
+echo "======================================="
+
+```
+
+
 
 * * *
 * * *
