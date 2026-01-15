@@ -391,6 +391,8 @@ sudo freshclam
 先在一個小範圍（例如下載資料夾）測試：
 clamscan /Users/$(whoami)/Downloads
 
+
+300GB的硬碟用了兩天才掃完！
 ```
 
 
