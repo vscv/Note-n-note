@@ -954,6 +954,46 @@ diskutil secureErase 3 /dev/diskN
 
 
 
+***
+是因為 git clone 的設計只能用來下載整個儲存庫 (Repository)，而不支援直接下載儲存庫內部的特定資料夾路徑（/tree/main/...）。
+
+當您把網頁瀏覽器的網址直接貼到 git clone 後面時，Git 會找不到這個「不存在」的儲存庫位址。
+
+✅ 解決方案 1：複製整個儲存庫（最簡單）
+您可以先複製整個儲存庫，然後再進入您感興趣的資料夾。
+```bash
+# 複製整個專案
+git clone https://github.com/NVIDIA/cuda-q-academic.git
+
+# 進入目標資料夾
+cd cuda-q-academic/quick-start-to-quantum
+```
+
+
+✅ 解決方案 2：稀疏檢出 (Sparse Checkout)
+如果您只想下載那個特定資料夾，而不想要整個專案（節省空間），可以使用 Git 的「稀疏檢出」功能：
+```bash
+# 1. 建立一個新資料夾並進入
+mkdir cuda-q-quickstart && cd cuda-q-quickstart
+
+# 2. 初始化 Git
+git init
+
+# 3. 設定遠端來源
+git remote add -f origin https://github.com/NVIDIA/cuda-q-academic.git
+
+# 4. 啟用稀疏檢出
+git config core.sparseCheckout true
+
+# 5. 指定要下載的路徑
+echo "quick-start-to-quantum" >> .git/info/sparse-checkout
+
+# 6. 拉取資料
+git pull origin main
+```
+
+***
+
 
 ***
 
