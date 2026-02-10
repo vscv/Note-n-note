@@ -1,4 +1,14 @@
 ***
+| 功能描述 | Screen 指令 | Tmux 指令 |
+| 開啟新工作階段 | screen | tmux |
+| 開啟並命名工作階段 | screen -S <name> | tmux new -s <name> |
+| 列出所有工作階段 | screen -ls | tmux ls |
+| 重新連回工作階段 | screen -r <name> | tmux attach -t <name> |
+| 刪除指定工作階段 | screen -X -S <name> quit | tmux kill-session -t <name> |
+| 刪除所有工作階段 | - | tmux kill-server |
+
+
+***
 screen 為什麼會出現亂碼？
 UTF-8 支援未開啟： screen 預設可能運作在 8-bit 模式，而 macOS 終端機（iTerm2 或 Terminal.app）預設使用 UTF-8。當 screen 不知道要處理 UTF-8 多位元組字元時，就會將中文或特殊符號解析成一堆亂碼。
 
@@ -103,6 +113,8 @@ set -g mouse on
 # unbind C-b
 # set-option -g prefix C-a
 # bind-shell C-a send-prefix
+
+
 
 
 
