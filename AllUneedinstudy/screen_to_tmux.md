@@ -66,9 +66,9 @@ utf8 on on
 ### 2. 快捷鍵邏輯：Prefix 的改變
 這是最容易不習慣的地方。所有的快捷鍵都需要先按一個 Prefix (前綴鍵)。
 
-Screen: 預設是 Ctrl + A。
+Screen: 預設是  <kbd>Ctrl</kbd> + <kbd>a</kbd>
 
-Tmux: 預設是 Ctrl + B。
+Tmux:   預設是  <kbd>Ctrl</kbd> + <kbd>b</kbd>
 
 
 常用快捷鍵對應：
