@@ -37,6 +37,48 @@ slurm + miniconda + jupyter
 
 
 ---
+# SFTP
+SFTP (Secure File Transfer Protocol) 是一種基於 SSH 安全加密的檔案傳輸工具。常用指令包括連線 sftp user@host、下載 get、上傳 put、顯示遠端/本地目錄 ls/lls、切換目錄 cd/lcd 以及退出 quit。SFTP 具有互動性，能安全地在本地與遠端伺服器間管理檔案。 
+
+以下是常用的 SFTP 指令整理：
+
+1. 建立連線 
+```基礎連線： sftp username@hostname
+指定連接埠 (Port)： sftp -P port username@hostname (注意大寫 -P) 
+```
+3. 檔案與目錄操作 (遠端伺服器)
+```
+列出檔案： ls
+顯示當前目錄： pwd
+切換目錄： cd <directory>
+建立目錄： mkdir <directory>
+刪除檔案： rm <file>
+刪除空目錄： rmdir <directory>
+重新命名： rename <oldname> <newname> 
+```
+5. 上傳與下載 (檔案傳輸)
+```下載檔案： get <remote_file> (下載至本機目前目錄)
+下載資料夾： get -r <remote_folder>
+上傳檔案： put <local_file> (上傳至遠端目前目錄)
+上傳資料夾： put -r <local_folder>
+```
+
+6. 本地操作 (Local)
+```在指令前加上 l (local) 可對本地主機進行操作：
+列出本地檔案： lls
+切換本地目錄： lcd <directory>
+顯示本地當前目錄： lpwd
+在本地執行指令： ! <command> (例如 !ls 顯示本地文件列表)
+```
+
+7. 結束連線
+```離開： quit 或 exit 
+操作提示：
+在 sftp> 提示符下輸入 ? 或 help 可列出所有可用指令。
+若要保存修改時間和檔案權限，上傳時可使用 put -p。
+```
+
+---
 # ssh timeout 時間
 
 如果是因為 shell 自動登出（非 SSH），可以在使用者的 shell 設定檔中調整 TMOUT：
