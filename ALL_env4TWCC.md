@@ -88,6 +88,55 @@ export TMOUT=1800  # 單位是秒，這裡是 30 分鐘
 
 `某些系統可能在/etc/profile檔案中設定了readonly TMOUT，這會阻止使用者修改TMOUT的值。如果遇到-bash: TMOUT: readonly variable的錯誤，您需要將readonly TMOUT這一行註解掉。`
 
+
+---
+在 VS Code 中整合 `sbatch` 啟動的 Jupyter Notebook 非常方便，因為 VS Code 內建了強大的**自動埠號轉發（Port Forwarding）**功能。
+
+以下是具體的實作步驟，讓您不需要手動輸入複雜的 SSH 指令：
+
+---
+
+## 步驟 1：使用 VS Code 連線至 Nano 5
+
+1. 在本地電腦安裝 **Remote - SSH** 擴充功能。
+2. 點擊左下角的藍色圖示 `><`，選擇 **Connect to Host...**。
+3. 輸入 `your_id@nano5.nchc.org.tw` 並完成登入。
+
+## 步驟 2：提交 sbatch 腳本
+
+在 VS Code 內建的終端機（Terminal）中，提交您的 Jupyter 啟動腳本：
+
+```bash
+sbatch submit_jupyter.sh
+
+```
+
+提交後，請使用 `tail -f jupyter_作業編號.log` 觀察日誌，直到看到 `http://127.0.0.1:8888/tree?token=...` 的訊息出現。
+
+## 步驟 3：手動設定埠號轉發 (Port Forwarding)
+
+由於 `sbatch` 是在計算節點（如 `nano5-compute01`）執行，VS Code 有時無法自動偵測到跨節點的埠號，這時請手動設定：
+
+1. 在 VS Code 下方狀態列找到 **「埠號」(Ports)** 面板（如果沒看到，請對狀態列按右鍵勾選「Ports」）。
+2. 點擊 **「新增埠號」(Forward a Port)**。
+3. **關鍵點：** 在輸入框中直接輸入 `計算節點名稱:8888`（例如 `nano5-compute01:8888`）。
+4. VS Code 會自動建立隧道。此時「轉發位址」會顯示為 `http://localhost:8888`。
+
+## 步驟 4：開啟瀏覽器或直接在 VS Code 使用
+
+* **瀏覽器法：** 直接點擊「轉發位址」旁的地球圖示，瀏覽器會開啟 Jupyter 頁面，再貼上 Log 裡的 **Token** 即可。
+* **VS Code 原生介面：** 您也可以在 VS Code 中開啟一個 `.ipynb` 檔案，點擊右上角的 **Select Kernel** -> **Existing Jupyter Server**，貼上完整的 URL（含 Token），這樣就能直接在 VS Code 漂亮的介面裡寫程式，還能享有 IntelliSense 代碼補全。
+
+---
+
+### 💡 為什麼要這樣做？
+
+* **免記指令：** 您不需要在本地端開好幾個終端機視窗下 `ssh -L` 指令。
+* **斷線重連：** 即使您的本地網路不穩斷線，只要重新連上 VS Code，它會自動幫您重新掛載這些隧道，實驗不會中斷。
+
+**需要我幫您檢查您的 `sbatch` 腳本中，啟動 Jupyter 的參數是否與 VS Code 完美相容嗎？**
+
+
 ---
 ## install_env.sh
 * 2021
