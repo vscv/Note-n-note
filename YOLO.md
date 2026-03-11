@@ -413,7 +413,10 @@ https://www.youtube.com/watch?v=boVmetUahes
 
 
    https://github.com/OpenGVLab/InternImage/blob/master/detection/README.md
+   
    Our detection code is developed on top of MMDetection v2.28.1. 偵測是基於MM家的架構！
+
+   MMDetection provides hundreds of existing and existing detection models in Model Zoo), and supports multiple standard datasets, including Pascal VOC, COCO, CityScapes, LVIS, etc.
 
 #### COCO資料集的表現
 
@@ -423,7 +426,7 @@ https://www.youtube.com/watch?v=boVmetUahes
 
 
 ---
-
+# MMDetection provides hundreds of existing and existing detection models in Model Zoo), and supports multiple standard datasets, including Pascal VOC, COCO, CityScapes, LVIS, etc.
 
 ---
 
