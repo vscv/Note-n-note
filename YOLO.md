@@ -82,8 +82,19 @@ yolo_dataset/
 2.	兩者內部的子資料夾結構（如 train/ 或 val/）必須完全一致。
 
 
+---
+# 主流偵測模型表
 
+|特性	|RF-DETR (2025)	|YOLO26 (2026)	|RT-DETR v2 (2024)|
+|---|---|---|---|
+|核心架構	|Transformer (DINOv2 Backbone)	|高度優化 CNN (MuSGD 優化)	|Transformer (Hybrid Encoder)|
+|訓練格式	|COCO / YOLO 自動切換	|嚴格 YOLO (.txt)	|主要是 COCO (.json)|
+|NMS 依賴	|完全無需 NMS (End-to-End)	|無需 NMS (ProgLoss 優化)	|無需 NMS|
+|收斂速度	|極快 (受惠於基礎模型預訓練)	|中等 (需較多 Epoch 訓練卷積)	|較慢 (Transformer 訓練較吃力)|
+|顯存消耗	|高 (Attention 機制較佔記憶體)	|極低 (適合邊緣端訓練)	|高|
+|領域泛化	|最強 (換場景不需大量資料)	|普通 (依賴資料增強)	|強|
 
+---
 --- 
 
 ## YOLO-segmentation performance
