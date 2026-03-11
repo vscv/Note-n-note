@@ -1,5 +1,89 @@
 # YOLO note
 
+---
+# 物件偵測資料集資料夾架構對照 (COCO, VOC, YOLO)
+
+在進行機器學習任務時，正確的資料夾結構是程式能夠順利讀取資料的關鍵。以下是三種最主流格式的架構說明。
+
+1. MS COCO 格式
+
+COCO 格式的特點是**「圖檔分離，標籤集中」**。所有的標記資訊都存在一個單一的 JSON 檔案中。
+資料夾架構：
+
+```
+coco_dataset/
+├── annotations/
+│   ├── instances_train2017.json  # 訓練集所有標籤
+│   └── instances_val2017.json    # 驗證集所有標籤
+├── train2017/                    # 存放訓練圖片
+│   ├── 000000000001.jpg
+│   └── 000000000002.jpg
+└── val2017/                      # 存放驗證圖片
+    ├── 000000000031.jpg
+    └── 000000000032.jpg
+```
+
+2. Pascal VOC 格式
+
+VOC 格式採用 XML 檔案，特點是**「一對一」**，即每一張圖片都對應一個同名的 XML 標籤檔。
+資料夾架構：
+```
+VOCdevkit/
+└── VOC2012/
+    ├── Annotations/              # 存放所有 XML 標籤檔
+    │   ├── 2007_000032.xml
+    │   └── 2007_000033.xml
+    ├── JPEGImages/               # 存放所有 JPG 圖片檔
+    │   ├── 2007_000032.jpg
+    │   └── 2007_000033.jpg
+    └── ImageSets/
+        └── Main/
+            ├── train.txt         # 條列訓練集的檔案名稱
+            └── val.txt           # 條列驗證集的檔案名稱
+```
+
+3. YOLO 格式 (Ultralytics 標準)
+
+YOLO 格式是目前最適合訓練的架構，它要求圖片與標籤路徑必須**「平行且對應」**。標籤為 .txt 檔，內容為歸一化後的座標。
+資料夾架構：
+```
+yolo_dataset/
+├── data.yaml                     # 設定檔：定義路徑與類別名稱
+├── images/
+│   ├── train/                    # 訓練圖片
+│   │   ├── img1.jpg
+│   │   └── img2.jpg
+│   └── val/                      # 驗證圖片
+│       ├── img3.jpg
+│       └── img4.jpg
+└── labels/
+    ├── train/                    # 訓練標籤 (必須與圖片同名)
+    │   ├── img1.txt
+    │   └── img2.txt
+    └── val/                      # 驗證標籤 (必須與圖片同名)
+        ├── img3.txt
+        └── img4.txt
+```
+
+💡 關鍵差異總結
+
+|特性|	MS COCO|	Pascal VOC|	YOLO (Ultralytics)|
+|---|---|---|---|
+|標籤格式|	JSON (一個檔案包全部)|	XML (一個檔案對應一張圖)|	TXT (一個檔案對應一張圖)|
+|座標系統|	\[x_min, y_min, width, height] |	\[x_min, y_min, x_max, y_max]	| \[class_id, x_center, y_center, width, height] |
+|單位	|絕對像素值|	絕對像素值|	歸一化 (0.0 到 1.0)|
+|資料分割|	由 JSON 檔名區分|	由 ImageSets/Main/*.txt 定義	|由資料夾路徑直接區分|
+
+
+⚠️ 特別注意 (YOLO 訓練)
+
+在訓練 YOLO 模型時，程式會自動將路徑中的 /images/ 字串替換為 /labels/ 來尋找對應的標籤。因此：
+1.	圖片與標籤的資料夾名稱必須固定為 images 與 labels。
+2.	兩者內部的子資料夾結構（如 train/ 或 val/）必須完全一致。
+
+
+
+
 --- 
 
 ## YOLO-segmentation performance
