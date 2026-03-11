@@ -417,7 +417,7 @@ https://www.youtube.com/watch?v=boVmetUahes
 
 #### COCO資料集的表現
 
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/49ad7132-b6d0-42b8-a43d-e7121656a8b6" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/49ad7132-b6d0-42b8-a43d-e7121656a8b6" />
 
 
 
