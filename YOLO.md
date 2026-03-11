@@ -423,6 +423,29 @@ https://www.youtube.com/watch?v=boVmetUahes
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/49ad7132-b6d0-42b8-a43d-e7121656a8b6" />
 
 
+## Training
+
+`本身有支援SLURM跨節點訓練`
+
+To train an `InternImage` on COCO, run:
+
+```bash
+sh dist_train.sh <config-file> <gpu-num>
+```
+
+For example, to train `InternImage-T` with 8 GPU on 1 node, run:
+
+```bash
+sh dist_train.sh configs/coco/mask_rcnn_internimage_t_fpn_1x_coco.py 8
+```
+
+## Manage Jobs with Slurm
+
+For example, to train `InternImage-L` with 32 GPU on 4 node, run:
+
+```bash
+GPUS=32 sh slurm_train.sh <partition> <job-name> configs/coco/cascade_internimage_xl_fpn_3x_coco.py work_dirs/cascade_internimage_xl_fpn_3x_coco
+```
 
 
 ---
