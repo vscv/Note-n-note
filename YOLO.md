@@ -411,6 +411,11 @@ https://www.youtube.com/watch?v=boVmetUahes
 |CB-InternImage-H	|DINO（TTA）	|65.0 / 65.4	|2.18億	| ckpt有  cfg有|
 |CB-InternImage-G	|DINO（TTA）	|65.3 / 65.5	|6B	|未公布|
 
+
+   https://github.com/OpenGVLab/InternImage/blob/master/detection/README.md
+   Our detection code is developed on top of MMDetection v2.28.1. 偵測是基於MM家的架構！
+
+
 ---
 
 
