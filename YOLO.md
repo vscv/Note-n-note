@@ -395,6 +395,8 @@ dataset/
 
    通常設定在 1e-4。由於其 Transformer 特性，過大的學習率會導致損失函數（Loss）劇烈震盪甚至爆炸。
 
-
+RF-DETR Segmentation Benchmarks and Training Guide  
+https://www.youtube.com/watch?v=boVmetUahes  
+這段影片詳細展示了 RF-DETR 在 2026 年初的最新基準測試以及如何針對自定義資料集進行微調訓練。  
 ---
 ---
