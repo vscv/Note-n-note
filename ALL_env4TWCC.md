@@ -347,7 +347,18 @@ head: 將輸入資料的最開頭幾行資料輸出
 
 du -a /path_to_u | sort -n -r | head -n 5
 
+列出當前目錄下前 10 大的檔案與目錄：
 
+du -sh * | sort -rh | head -n 10
+
+遞迴查看第一層子目錄的大小 (深入分析)：
+
+du -h --max-depth=1 /home
+
+
+尋找大於 100MB 的檔案：
+
+find / -type f -size +100M
 
 
  利用 find指令如
