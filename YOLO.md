@@ -425,7 +425,7 @@ https://www.youtube.com/watch?v=boVmetUahes
 
 ## Training
 
-`本身有支援SLURM跨節點訓練`
+`本身有支援SLURM跨節點訓練` `只要是基於troch訓練的都可以用srun來跨節點`
 
 To train an `InternImage` on COCO, run:
 
