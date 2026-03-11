@@ -399,4 +399,21 @@ RF-DETR Segmentation Benchmarks and Training Guide
 https://www.youtube.com/watch?v=boVmetUahes  
 這段影片詳細展示了 RF-DETR 在 2026 年初的最新基準測試以及如何針對自定義資料集進行微調訓練。  
 ---
+# InternImage-H
+###  書生圖像 - 大規模視覺基礎模型
+   https://github.com/OpenGVLab/InternImage/blob/master/README_CN.md
+   InternImage是一個由上海人工智慧實驗室、清華大學等機構的研究人員提出的基於變形神經（CNN）的視覺基礎模型。與基於Transformer的網路不同，InternImage以可變形算DCNv3（2024支援DCNv4）作為核心子，使模型不僅具有檢測和分割等下游任務所需的動態有效感受野，而且能夠進行自適應的聚合空間。
+
+- 2022年11月10日：🚀 InternImage-H在COCO目標偵測任務上以65.4 mAP斬獲冠軍，是唯一突破65.0 mAP的超強目標偵測模型！
+
+|骨幹	|方法	|box mAP（驗證/測試）	|#參數	|下載|
+|---|---|---|---|
+|CB-InternImage-H	|DINO（TTA）	65.0 / 65.4	|2.18億	| ckpt有  cfg有|
+|CB-InternImage-G	|DINO（TTA）	65.3 / 65.5	|6B	|未公布|
+
+---
+
+
+---
+
 ---
