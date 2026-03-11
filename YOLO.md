@@ -406,10 +406,10 @@ https://www.youtube.com/watch?v=boVmetUahes
 
 - 2022年11月10日：🚀 InternImage-H在COCO目標偵測任務上以65.4 mAP斬獲冠軍，是唯一突破65.0 mAP的超強目標偵測模型！
 
-|骨幹	|方法	|box mAP（驗證/測試）	|#參數	|下載|
-|---|---|---|---|
-|CB-InternImage-H	|DINO（TTA）	65.0 / 65.4	|2.18億	| ckpt有  cfg有|
-|CB-InternImage-G	|DINO（TTA）	65.3 / 65.5	|6B	|未公布|
+|骨幹	|方法	|box mAP（驗證/測試）	| #參數	|下載|
+|---|---|---|---|---|
+|CB-InternImage-H	|DINO（TTA）	|65.0 / 65.4	|2.18億	| ckpt有  cfg有|
+|CB-InternImage-G	|DINO（TTA）	|65.3 / 65.5	|6B	|未公布|
 
 ---
 
