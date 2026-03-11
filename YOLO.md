@@ -335,3 +335,55 @@ if __name__ == '__main__':
     # 4. 合併結果
     combine_results(results_from_pool)
 ```
+
+
+--- 
+---
+# RF-DETR
+Roboflow 在 2025 年推出的 RF-DETR (Roboflow Detection Transformer) 是物件偵測領域的一個重要里程碑。
+
+- RF-DETR 的訓練格式
+   與傳統 DETR 僅支援 COCO 不同，RF-DETR 為了貼近工業界需求，設計了高度靈活的資料讀取機制：
+
+   原生格式：COCO (JSON)
+
+   這是 RF-DETR 最推薦的格式。它會尋找 train/_annotations.coco.json 檔案。對於精細的「海洋廢棄物」標籤（包含多種屬性或遮蔽標記），COCO 格式能提供最完整的元數據。
+
+   兼容格式：YOLO (TXT)
+
+   RF-DETR 的 SDK (rfdetr package) 具備自動偵測功能。如果你提供包含 data.yaml 與 train/images/ 的目錄，它能直接讀取 YOLO 格式進行訓練。
+
+   預期結構：
+```  
+dataset/
+├── train/ (images & labels/json)
+├── valid/
+└── test/
+```
+
+
+- 訓練階段的關鍵注意點
+
+1. 梯度累積 (Gradient Accumulation)：
+
+   RF-DETR 是 Transformer 架構，對 Batch Size 非常敏感。官方建議 Total Batch Size 應維持在 16。
+```
+小顯存 (如 T4 GPU)：batch_size=4, grad_accum_steps=4 (4x4=16)。
+
+大顯存 (如 A100 GPU)：batch_size=16, grad_accum_steps=1。
+```
+2. DINOv2 權重初始化：
+   
+   RF-DETR 的強大源於其使用 DINOv2 作為 Backbone。在訓練時應確保載入預訓練權重，這對於辨識「沙灘上與自然物混雜的垃圾」非常有幫助，因為 DINOv2 的特徵提取具備極強的背景魯棒性。
+
+2. 早停機制 (Early Stopping)：
+
+   RF-DETR 在單一類別或簡單場景下收斂極快（有時不到 10 個 Epoch 就達到平台期）。建議開啟 early_stopping 以避免在海洋廢棄物這種樣本不均的資料集上產生過擬合。
+
+3. 學習率 (Learning Rate)：
+
+   通常設定在 1e-4。由於其 Transformer 特性，過大的學習率會導致損失函數（Loss）劇烈震盪甚至爆炸。
+
+
+---
+---
