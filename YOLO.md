@@ -415,6 +415,12 @@ https://www.youtube.com/watch?v=boVmetUahes
    https://github.com/OpenGVLab/InternImage/blob/master/detection/README.md
    Our detection code is developed on top of MMDetection v2.28.1. 偵測是基於MM家的架構！
 
+#### COCO資料集的表現
+
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/49ad7132-b6d0-42b8-a43d-e7121656a8b6" />
+
+
+
 
 ---
 
