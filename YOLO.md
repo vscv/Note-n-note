@@ -70,7 +70,7 @@ yolo_dataset/
 |特性|	MS COCO|	Pascal VOC|	YOLO (Ultralytics)|
 |---|---|---|---|
 |標籤格式|	JSON (一個檔案包全部)|	XML (一個檔案對應一張圖)|	TXT (一個檔案對應一張圖)|
-|座標系統|	\[x_min, y_min, width, height] |	\[x_min, y_min, x_max, y_max]	| \[class_id, x_center, y_center, width, height] |
+|座標系統|	\[x, y, width, height] |	\[x1, y1, x2, y2]	| \[class_id, x_center, y_center, width, height] |
 |簡易記法|	左上角,寬高 |	左上＋右下	| 中心點,寬高 |
 |單位	|絕對像素值|	絕對像素值|	歸一化 (0.0 到 1.0)|
 |資料分割|	由 JSON 檔名區分|	由 ImageSets/Main/*.txt 定義	|由資料夾路徑直接區分|
