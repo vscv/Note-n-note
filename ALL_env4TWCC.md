@@ -353,7 +353,23 @@ du -sh * | sort -rh | head -n 10
 
 遞迴查看第一層子目錄的大小 (深入分析)：
 
-du -h --max-depth=1 /home
+du -h --max-depth=1 /home/USER
+
+✅ 依照「大小由小到大」排序
+
+```bash
+du -h --max-depth=1 /home/user001/ | sort -h
+```
+
+✅ 依照「大小由大到小」排序（通常比較實用）
+```bash
+du -h --max-depth=1 /home/user001/ | sort -hr
+🔍 說明
+du -h：以 human-readable（K/M/G）顯示大小
+--max-depth=1：只列出第一層資料夾
+sort -h：依照容量（human-readable）排序
+-r：反轉（變成由大到小）
+```
 
 
 尋找大於 100MB 的檔案：
