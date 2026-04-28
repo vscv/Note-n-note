@@ -486,6 +486,7 @@ Hit:
 vis_frame_stride = 5 #50 #1 # %05d 沒連號的ffmpeg不能轉 ffmpeg -f image2 -i %*.png out.avi WILL NOT WORK! 
 讀檔還是用out_frame_idx（讀入固定的檔名），但是就把寫檔時的out_frame_idx（讀入固定的檔名）改成count填充，因為檔名也是`%05d`.jpg格式，可以直接換掉作用一樣。
 
+
 ```
 def nas_draw_and_save_masklets_cv2(video_dir, frame_names, vis_frame_stride, out_mask_path, video_segments):
     
@@ -536,6 +537,66 @@ def nas_draw_and_save_masklets_cv2(video_dir, frame_names, vis_frame_stride, out
 
 !ffmpeg -i {video_path} -q:v 2 -r {framerate} -start_number 0 {video_dir}/%05d.jpg -loglevel quiet -stats
 ```
+
+
+# FFMPEG 影片解析度尺寸裁切
+
+✅ 基本概念
+使用的是 ffmpeg 的 crop 濾鏡：
+
+`crop=寬度:高度:X座標:Y座標`
+
+|參數 |說明|
+|--|--|
+|寬度| 要保留的畫面寬| 
+|高度| 要保留的畫面高|
+|X| 從左邊算起的像素位置|
+|Y| 從上邊算起的像素位置|
+
+✅ 最基本範例：裁剪固定尺寸
+🔹 從左上角裁 640x480
+```bash
+ffmpeg -i input.mp4 -vf "crop=640:480:0:0" output.mp4
+```
+
+🔹 從指定位置裁剪（例：中間偏右下）
+```bash
+ffmpeg -i input.mp4 -vf "crop=640:480:100:50" output.mp4
+```
+
+✅ 裁剪「正中央」畫面（自動計算）
+假設你要裁成 640x480，無論原影片多大：
+```bash
+ffmpeg -i input.mp4 -vf "crop=640:480:(in_w-640)/2:(in_h-480)/2" output.mp4
+```
+📌 in_w、in_h 是 ffmpeg 內建的原始影片寬高變數。
+
+
+✅ 移除左右黑邊（例如 1920×1080 → 裁掉左右）
+```
+ffmpeg -i input.mp4 -vf "crop=1600:1080:160:0" output.mp4
+```
+
+✅ 只裁上半部（常用於監控或 AI 畫面）
+```
+ffmpeg -i input.mp4 -vf "crop=in_w:in_h/2:0:0" output.mp4
+```
+
+✅ 只裁下半部
+```
+ffmpeg -i input.mp4 -vf "crop=in_w:in_h/2:0:in_h/2" output.mp4
+```
+
+✅ 保留畫質（避免重編碼）
+如果你裁剪後仍能相容編碼，可指定高品質或接近無損：
+```
+ffmpeg -i input.mp4 -vf "crop=640:480:0:0" -c:v libx264 -crf 18 -preset veryfast output.mp4
+```
+
+|參數 |建議值 |
+|--|--|
+|-crf |18（高品質）~ 23（一般）|
+|-presetvery | fast / fast|
 
 
 
