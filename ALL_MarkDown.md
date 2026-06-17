@@ -531,6 +531,19 @@ print("這是 Python 程式碼")
 ```
 
 ---
+* * * 
+
+
+
+* * *
+# Latex
+LaTeX 字體大小指令	相對大小百分比	適用情境
+\small	約 90%	雙欄排版橫跨兩欄（figure*）且檔名很短時
+\footnotesize	約 80%	最推薦！ 標準三欄並排的黃金比例
+\script_size (寫作 \scriptsize)	約 70%	檔名極長（例如超過20個字元）或單欄排版強行擠三欄時
+<img width="432" height="189" alt="image" src="https://github.com/user-attachments/assets/b9ce42b0-ecb0-4e58-ba9c-1590f3c1e792" />
+
+
 
 
 * * *
