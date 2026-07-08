@@ -40,3 +40,10 @@ ESCI 僅需符合其中 24 項品質標準指標，被視為 SCIE、SSCI、AHCI 
 
 
 [北醫](https://tmurd.tmu.edu.tw/zh_tw/announcements/-%E9%87%8D%E8%A6%81%E6%8F%90%E9%86%92-%E6%8A%95%E7%A8%BF%E5%89%8D%E8%AB%8B%E5%86%8D%E6%AC%A1%E8%AC%B9%E6%85%8E%E8%A9%95%E4%BC%B0%E6%8A%95%E7%A8%BF%E6%9C%9F%E5%88%8A-95086294)
+
+
+
+- - -
+`請注意搜尋選項`
+
+<img width="160" height="296" alt="image" src="https://github.com/user-attachments/assets/a9f92895-16bc-4adb-ae4c-d360e4205a2c" />
