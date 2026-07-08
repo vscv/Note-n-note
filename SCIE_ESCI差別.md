@@ -47,3 +47,12 @@ ESCI 僅需符合其中 24 項品質標準指標，被視為 SCIE、SSCI、AHCI 
 `請注意搜尋選項`
 
 <img width="160" height="296" alt="image" src="https://github.com/user-attachments/assets/a9f92895-16bc-4adb-ae4c-d360e4205a2c" />
+
+
+---
+善用Clarivate官方`Master Journal List`搜尋功能，可查看期刊收錄為何種Index。實際JCR點數可以查好心人公布的JIF表。
+
+[https://mjl.clarivate.com/home](https://mjl.clarivate.com/home)
+
+<img width="300"  alt="image" src="https://github.com/user-attachments/assets/ede1a5eb-c67d-49dd-b081-7e527654515e" />
+
