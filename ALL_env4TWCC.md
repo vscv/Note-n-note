@@ -385,6 +385,20 @@ find / -type f -size +100M
 
  
 
+## 快速刪除CKPT檔案
+刪除訓練ckpt存檔以節約空間，.ckpt 檔案包含了完整的優化器狀態（Optimizer States）、學習率狀態與 Epoch 資訊（所以高達 515 MB）；而 .pth 檔案則只儲存模型的權重（僅 128 MB）。
+
+1. 預覽要刪除的檔案清單（安全確認，不會真的刪除）：
+```find runs/detect -type f \( -name "checkpoint_*.ckpt" -o -name "last.ckpt" \)```
+
+2. 確認清單無誤後，加上 -delete 進行刪除：
+```find runs/detect -type f \( -name "checkpoint_*.ckpt" -o -name "last.ckpt" \) -delete```
+
+
+
+
+
+
 
 
 ***
