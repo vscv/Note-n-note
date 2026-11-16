@@ -932,7 +932,76 @@ pts_clear_button_output = ipyw.Output()
 
 
 * * *
+# 語義分割評估指標：IoU 與 Dice Coefficient 深度解析
 
+## 1. 數學定義與公式
+
+假設預測遮罩為 $A$（預測值，Prediction），真實遮罩為 $B$（真實標註，Ground Truth）：
+
+### IoU (Intersection over Union / Jaccard Index)
+
+$$
+\text{IoU} = \frac{|A \cap B|}{|A \cup B|} = \frac{|A \cap B|}{|A| + |B| - |A \cap B|}
+$$
+
+* **含意**：交集除以聯集（把聯集算一次）。
+
+### Dice 係數 (Sørensen-Dice Coefficient, DSC)
+
+$$
+\text{Dice} = \frac{2 \cdot |A \cap B|}{|A| + |B|}
+$$
+
+* **含意**：2 倍的交集除以兩者面積（個數）總和（把交集權重算兩倍）。
+* **註**：在像素級別的計算中，Dice 係數等同於 **F1-Score**。
+
+### 兩者之間的數學轉換
+
+* $\text{Dice} = \frac{2 \cdot \text{IoU}}{1 + \text{IoU}}$
+* $\text{IoU} = \frac{\text{Dice}}{2 - \text{Dice}}$
+
+---
+
+## 2. 核心差異與特性比較
+
+| 比較項目 | IoU (Intersection over Union) | Dice 係數 (Dice Coefficient) |
+| :--- | :--- | :--- |
+| **數值大小** | 較嚴格、數值較低 | 較寬容、數值通常高於 IoU |
+| **對交集的權重** | 對交集只計一次 | 對交集賦予 2 倍權重 |
+| **對小目標/細長結構** | 懲罰更重，數值容易掉得很低 | 相對敏感且寬容，評分較好看 |
+| **常見應用場景** | 物件偵測、一般語義分割、重度懲罰錯判 | 醫療影像分割（微小病灶、類別極度不平衡） |
+
+---
+
+## 3. 為什麼會有這些差異？
+
+### 1. 數值上的落差
+因為 $\text{Dice} = \frac{2 \cdot \text{IoU}}{1 + \text{IoU}}$，當 $\text{IoU} = 0.5$ 時，$\text{Dice} \approx 0.67$。因此，若不加說明直接拿別人的 Dice 分數去和 IoU 比較，會顯得表現比較好。
+
+### 2. 對誤差的敏感度
+* **IoU**：分母是聯集 ($|A| + |B| - |A \cap B|$)，當出現誤判（False Positive 或 False Negative）時，分母會大幅膨脹，導致 IoU 下降得非常快。
+* **Dice**：因為分子乘了 2，對交集重疊區域給予了更高的獎勵。在面對小物件或背景與前景極度不平衡（例如醫學影像中器官只佔整張圖一小部分）時，Dice 表現得比較平穩，不容易因為些微邊界誤差而出現零分或極低分。
+
+---
+
+## 4. Dice 係數 / F1 分數 (Dice Coefficient / F1-Score)
+
+Dice 係數衡量的是兩個集合的相似度，在數學上與 F1-Score 等價。它對「交集」賦予了更高的權重，常被用於細粒度分割或類別極度不平衡的場景（如醫療影像分割、小目標物件分割）。
+
+* **公式**：
+$$
+\text{Dice} = \frac{2 \times TP}{2 \times TP + FP + FN} = \frac{2 \times |A \cap B|}{|A| + |B|}
+$$
+* **與 IoU 的關係**：$\text{Dice} = \frac{2 \cdot \text{IoU}}{\text{IoU} + 1}$，Dice 通常會比 IoU 略高一些。
+
+---
+
+## 5. 頻率加權交併比 (Frequency Weighted IoU, FWIoU)
+
+這是 IoU 的改進版本，根據每個類別出現的頻率（像素佔比）來給予不同的權重。
+
+* **特性**：頻率越高的類別，其 IoU 在總平均中的權重越大。
+* **適用場景**：適用於類別分佈極度不均的資料集。
 
 * * *
 * * *
