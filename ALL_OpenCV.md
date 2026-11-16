@@ -934,6 +934,8 @@ pts_clear_button_output = ipyw.Output()
 * * *
 # 語義分割評估指標：IoU 與 Dice Coefficient 深度解析
 
+![IoU, DICE, dice Coefficient.jpg](https://github.com/vscv/Note-n-note/blob/main/temp_imgs/IoU%2C%20DICE%2C%20dice%20Coefficient.jpg)
+
 ## 1. 數學定義與公式
 
 假設預測遮罩為 $A$（預測值，Prediction），真實遮罩為 $B$（真實標註，Ground Truth）：
