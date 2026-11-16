@@ -989,10 +989,10 @@ $$
 Dice 係數衡量的是兩個集合的相似度，在數學上與 F1-Score 等價。它對「交集」賦予了更高的權重，常被用於細粒度分割或類別極度不平衡的場景（如醫療影像分割、小目標物件分割）。
 
 * **公式**：
-$$
-\text{Dice} = \frac{2 \times TP}{2 \times TP + FP + FN} = \frac{2 \times |A \cap B|}{|A| + |B|}
-$$
-* **與 IoU 的關係**：$\text{Dice} = \frac{2 \cdot \text{IoU}}{\text{IoU} + 1}$，Dice 通常會比 IoU 略高一些。
+$\text{Dice} = \frac{2 \times TP}{2 \times TP + FP + FN} = \frac{2 \times |A \cap B|}{|A| + |B|}$
+
+* **與 IoU 的關係**：
+$\text{Dice} = \frac{2 \cdot \text{IoU}}{\text{IoU} + 1}$，Dice 通常會比 IoU 略高一些。
 
 ---
 
